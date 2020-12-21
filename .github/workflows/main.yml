@@ -17,10 +17,7 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2 
     - name: Install flex/bison
-      run: |
-        choco install winflexbison
-        ren "C:\ProgramData\chocolatey\bin\win_bison.exe" "bison.exe"
-        ren "C:\ProgramData\chocolatey\bin\win_flex.exe" "flex.exe" 
+      run:  choco install winflexbison
         
     - name: Install jom
       run: choco install jom
