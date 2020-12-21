@@ -52,7 +52,7 @@ jobs:
         Copy-Item "src\gcconfig.pri.in" -Destination "src\gcconfig.pri"
         (Get-Content src\gcconfig.pri ).Replace('#CONFIG += release','CONFIG += release') | Out-File src\gcconfig.pri
         (Get-Content src\gcconfig.pri ).Replace('#QMAKE_LRELEASE = /usr/bin/lrelease','QMAKE_LRELEASE = lrelease') | Out-File src\gcconfig.pri
-        (Get-Content src\gcconfig.pri ).Replace('#WINKIT_INSTALL= "C:/Program Files (x86)/Windows Kits/8.1/Lib/winv6.3/um/x64"','WINKIT_INSTALL = "c:\Program Files (x86)\Windows Kits\10\Lib\10.0.18362.0\um\x64"') | Out-File src\gcconfig.pri
+        (Get-Content src\gcconfig.pri ).Replace('#WINKIT_INSTALL= "C:/Program Files (x86)/Windows Kits/8.1/Lib/winv6.3/um/x64"','WINKIT_INSTALL = "c:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64"') | Out-File src\gcconfig.pri
         (Get-Content src\gcconfig.pri ).Replace('#QMAKE_LEX = win_flex','QMAKE_LEX = win_flex --wincompat') | Out-File src\gcconfig.pri  
         (Get-Content src\gcconfig.pri ).Replace('#QMAKE_YACC = win_bison','QMAKE_YACC = win_bison --file-prefix=y -t') | Out-File src\gcconfig.pri  
         (Get-Content src\gcconfig.pri ).Replace('#HTPATH = ../httpserver','HTPATH = ../httpserver') | Out-File src\gcconfig.pri                  
