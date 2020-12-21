@@ -38,7 +38,7 @@ jobs:
     - name: Prep qwt
       run: Copy-Item "D:\a\GoldenCheetah\GoldenCheetah\qwt\qwtconfig.pri.in" -Destination "D:\a\GoldenCheetah\GoldenCheetah\src\qwtconfig.pri"
       
-    - name: Prep qwt
+    - name: Prep gcc
       run: |
         Copy-Item "D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri.in" -Destination "D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri"
         ((Get-Content -path D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri -Raw) -replace '#CONFIG += release','CONFIG += release') | Set-Content -Path D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri
@@ -48,8 +48,12 @@ jobs:
         ((Get-Content -path D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri -Raw) -replace '#QMAKE_YACC = win_bison','QMAKE_YACC = win_bison --file-prefix=y -t') | Set-Content -Path D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri
         ((Get-Content -path D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri -Raw) -replace '#HTPATH = ../httpserver','HTPATH = ../httpserver') | Set-Content -Path D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri
         ((Get-Content -path D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri -Raw) -replace '#DEFINES += GC_WANT_ROBOT','DEFINES += GC_WANT_ROBOT') | Set-Content -Path D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri
+        "DEFINES += NOWEBKIT" | Add-Content D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri.
         "CONFIG += lex" | Add-Content D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri. 
         "CONFIG += yacc" | Add-Content D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri. 
+        "lex.CONFIG += target_predeps" | Add-Content D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri.
+        "yacc_impl.CONFIG += target_predeps" | Add-Content D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri. 
+        "yacc_decl.CONFIG += target_predeps" | Add-Content D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri. 
         "GC_COMPONENTS=C:\Coding\gc-win-sdk-64bit" | Add-Content D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri. 
         
     - name: Create Makefile
