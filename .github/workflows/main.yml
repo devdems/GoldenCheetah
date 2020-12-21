@@ -92,10 +92,12 @@ jobs:
       run: jom qmake_all
     
     - name: Run jom
-      run: jom -j1
-        
-    - name: upload artifact
-      uses: actions/upload-artifact@v2
+      run: jom
+    
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        name: windows
-        path: build\
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "Development Build"
+        files: release\GoldenCheetah.exe
