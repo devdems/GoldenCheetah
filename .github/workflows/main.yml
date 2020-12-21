@@ -101,13 +101,13 @@ jobs:
       run: jom -j1
       
     - name: Rename build
-      run: Copy-Item "release\GoldenCheetah.exe" -Destination "release\GoldenCheetah-${{ steps.create_timestamp.outputs.release_datestamp }}.exe"
+      run: Copy-Item "src\release\GoldenCheetah.exe" -Destination "src\release\GoldenCheetah-${{ steps.create_timestamp.outputs.release_datestamp }}.exe"
       
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: release\GoldenCheetah-${{ steps.create_timestamp.outputs.release_datestamp }}.exe
+        file: src\release\GoldenCheetah-${{ steps.create_timestamp.outputs.release_datestamp }}.exe
         tag: ${{ github.ref }}-nightly
         prerelease: true
         release_name: "Nightly Development Build - ${{ steps.create_timestamp.outputs.release_datestamp }}" 
