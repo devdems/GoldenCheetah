@@ -24,10 +24,10 @@ jobs:
         
     - name: Get SDK
       run: Invoke-webrequest -uri https://github.com/GoldenCheetah/WindowsSDK/releases/download/v0.1.1/gc-win-sdk-64bit.zip -OutFile gc-win-sdk-64bit.zip	      
-      	  
+
     - name: Extract sdk
       run: Expand-Archive -Path gc-win-sdk-64bit.zip -DestinationPath C:\Coding     
-           
+
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
