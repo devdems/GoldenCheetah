@@ -14,8 +14,14 @@ jobs:
     steps:
     - name: MSVC Environment Setup
       uses: ilammy/msvc-dev-cmd@v1
+      
     - name: checkout
-      uses: actions/checkout@v2 
+      uses: actions/checkout@v2
+       
+    - name: Create Timestamp
+      id: create_timestamp
+      run: $buildTime = Get-Date -Format "yyyyMMddHHmmss""; Write-Host "::set-output name=release_datestamp::$buildTime"
+          
     - name: Install flex/bison
       run:  choco install winflexbison
         
@@ -93,11 +99,14 @@ jobs:
     
     - name: Run jom
       run: jom
-    
+      
+    - name: Rename build
+      run: Copy-Item "release\GoldenCheetah.exe" -Destination "release\GoldenCheetah-${{ steps.create_timestamp.outputs.release_datestamp }}.exe"
+        
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
+        automatic_release_tag: "nightly"
         prerelease: true
-        title: "Development Build"
-        files: release\GoldenCheetah.exe
+        title: "Nightly Development Build - ${{ steps.create_timestamp.outputs.release_datestamp }}"
+        files: release\GoldenCheetah-${{ steps.create_timestamp.outputs.release_datestamp }}.exe
