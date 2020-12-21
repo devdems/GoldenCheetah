@@ -75,7 +75,7 @@ jobs:
       uses: jurplel/install-qt-action@v2
       with:
           version: '5.14.2'
-          modules: 'qtcharts qtwebengine'
+          modules: 'qtcharts qtwebengine qtwebenginecore qtwebenginewidgets'
           setup-python: 'false'
 
     - name: Create Makefile
@@ -86,8 +86,11 @@ jobs:
     - name: Run MakeFile
       run: qmake build.pro
       
+    - name: Run qmake_all
+      run: jom qmake_all
+    
     - name: Run jom
-      run: jom qmake_all && jom
+      run: jom -j1
         
     - name: upload artifact
       uses: actions/upload-artifact@v2
