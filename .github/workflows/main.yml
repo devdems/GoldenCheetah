@@ -26,7 +26,46 @@ jobs:
       run: Invoke-webrequest -uri https://github.com/GoldenCheetah/WindowsSDK/releases/download/v0.1.1/gc-win-sdk-64bit.zip -OutFile gc-win-sdk-64bit.zip	      
 
     - name: Extract sdk
-      run: Expand-Archive -Path gc-win-sdk-64bit.zip -DestinationPath C:\Coding     
+      run: Expand-Archive -Path gc-win-sdk-64bit.zip -DestinationPath C:\Coding 
+    
+    - name: Get GSL
+      run: Invoke-webrequest -uri https://github.com/microsoft/vcpkg/archive/2020.11-1.zip -OutFile 2020.11-1.zip
+      
+    - name: Extract GSL
+      run: Expand-Archive -Path 2020.11-1.zip -DestinationPath C:\Coding
+
+    - name: Run GSL
+      run: C:\Coding\vcpkg-2020.11-1\bootstrap-vcpkg.bat 
+
+    - name: Run vcpkg
+      run: C:\Coding\vcpkg-2020.11-1\vcpkg install gsl --triplet x64-windows
+	  
+    - name: Prep qwt
+      run: Copy-Item "qwt\qwtconfig.pri.in" -Destination "qwt\qwtconfig.pri"
+      
+    - name: Prep gcc
+      run: |
+        Copy-Item "src\gcconfig.pri.in" -Destination "src\gcconfig.pri"
+        ((Get-Content -path src\gcconfig.pri -Raw) -replace '#CONFIG += release','CONFIG += release') | Set-Content -Path src\gcconfig.pri
+        ((Get-Content -path src\gcconfig.pri -Raw) -replace '#QMAKE_LRELEASE = /usr/bin/lrelease','QMAKE_LRELEASE = lrelease') | Set-Content -Path src\gcconfig.pri
+        ((Get-Content -path src\gcconfig.pri -Raw) -replace '#WINKIT_INSTALL= "C:/Program Files (x86)/Windows Kits/8.1/Lib/winv6.3/um/x64"','WINKIT_INSTALL = "c:\Program Files (x86)\Windows Kits\10\Lib\10.0.18362.0\um\x64"') | Set-Content -Path src\gcconfig.pri
+        ((Get-Content -path src\gcconfig.pri -Raw) -replace '#QMAKE_LEX = win_flex','QMAKE_LEX = win_flex --wincompat') | Set-Content -Path src\gcconfig.pri
+        ((Get-Content -path src\gcconfig.pri -Raw) -replace '#QMAKE_YACC = win_bison','QMAKE_YACC = win_bison --file-prefix=y -t') | Set-Content -Path src\gcconfig.pri
+        ((Get-Content -path src\gcconfig.pri -Raw) -replace '#HTPATH = ../httpserver','HTPATH = ../httpserver') | Set-Content -Path src\gcconfig.pri
+        ((Get-Content -path src\gcconfig.pri -Raw) -replace '#DEFINES += GC_WANT_ROBOT','DEFINES += GC_WANT_ROBOT') | Set-Content -Path src\gcconfig.pri
+        "DEFINES += NOWEBKIT" | Add-Content src\gcconfig.pri.
+        "CONFIG += lex" | Add-Content src\gcconfig.pri. 
+        "CONFIG += yacc" | Add-Content src\gcconfig.pri. 
+        "lex.CONFIG += target_predeps" | Add-Content src\gcconfig.pri.
+        "yacc_impl.CONFIG += target_predeps" | Add-Content src\gcconfig.pri. 
+        "yacc_decl.CONFIG += target_predeps" | Add-Content src\gcconfig.pri. 
+        "GC_COMPONENTS=C:\Coding\gc-win-sdk-64bit" | Add-Content src\gcconfig.pri.
+        "DEFINES += GC_WANT_GSL" | Add-Content src\gcconfig.pri.
+        "GSL_INCLUDES = C:\Coding\vcpkg-2020.11-1\packages\gsl_x64-windows\include" | Add-Content src\gcconfig.pri.
+        "GSL_LIBS = -LC:\Coding\vcpkg-2020.11-1\packages\gsl_x64-windows\lib -lgsl -lgslcblas" | Add-Content src\gcconfig.pri.
+        
+    - name: show gcc
+      run: Get-Content -path src\gcconfig.pri   
 
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
@@ -34,31 +73,7 @@ jobs:
           version: '5.12.2'
           modules: 'qtcharts qtwebengine'
           setup-python: 'false'
-          
-    - name: Prep qwt
-      run: Copy-Item "qwt\qwtconfig.pri.in" -Destination "qwt\qwtconfig.pri"
-      
-    - name: Prep gcc
-      run: |
-        Copy-Item "src\gccconfig.pri.in" -Destination "src\gccconfig.pri"
-        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#CONFIG += release','CONFIG += release') | Set-Content -Path src\gccconfig.pri
-        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#QMAKE_LRELEASE = /usr/bin/lrelease','QMAKE_LRELEASE = lrelease') | Set-Content -Path src\gccconfig.pri
-        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#WINKIT_INSTALL= "C:/Program Files (x86)/Windows Kits/8.1/Lib/winv6.3/um/x64"','WINKIT_INSTALL = "c:\Program Files (x86)\Windows Kits\10\Lib\10.0.18362.0\um\x64"') | Set-Content -Path src\gccconfig.pri
-        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#QMAKE_LEX = win_flex','QMAKE_LEX = win_flex --wincompat') | Set-Content -Path src\gccconfig.pri
-        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#QMAKE_YACC = win_bison','QMAKE_YACC = win_bison --file-prefix=y -t') | Set-Content -Path src\gccconfig.pri
-        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#HTPATH = ../httpserver','HTPATH = ../httpserver') | Set-Content -Path src\gccconfig.pri
-        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#DEFINES += GC_WANT_ROBOT','DEFINES += GC_WANT_ROBOT') | Set-Content -Path src\gccconfig.pri
-        "DEFINES += NOWEBKIT" | Add-Content src\gccconfig.pri.
-        "CONFIG += lex" | Add-Content src\gccconfig.pri. 
-        "CONFIG += yacc" | Add-Content src\gccconfig.pri. 
-        "lex.CONFIG += target_predeps" | Add-Content src\gccconfig.pri.
-        "yacc_impl.CONFIG += target_predeps" | Add-Content src\gccconfig.pri. 
-        "yacc_decl.CONFIG += target_predeps" | Add-Content src\gccconfig.pri. 
-        "GC_COMPONENTS=C:\Coding\gc-win-sdk-64bit" | Add-Content src\gccconfig.pri. 
-        
-    - name: show gcc
-      run: Get-Content -path src\gccconfig.pri   
-      
+
     - name: Create Makefile
       run: |
         Invoke-Expression "& 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat' amd64"
