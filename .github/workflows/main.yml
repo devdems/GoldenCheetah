@@ -56,6 +56,9 @@ jobs:
         "yacc_decl.CONFIG += target_predeps" | Add-Content D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri. 
         "GC_COMPONENTS=C:\Coding\gc-win-sdk-64bit" | Add-Content D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri. 
         
+    - name: show gcc
+      run: Get-Content -path D:\a\GoldenCheetah\GoldenCheetah\src\gccconfig.pri   
+      
     - name: Create Makefile
       run: |
         Invoke-Expression "& 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat' amd64"
