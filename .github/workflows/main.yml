@@ -74,9 +74,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-          version: '5.14.2'
           modules: 'qtcharts qtwebengine qtwebenginecore qtwebenginewidgets'
-          setup-python: 'false'
 
     - name: Create Makefile
       run: |
