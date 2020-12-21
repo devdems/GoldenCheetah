@@ -56,7 +56,11 @@ jobs:
         (Get-Content src\gcconfig.pri ).Replace('#QMAKE_LEX = win_flex','QMAKE_LEX = win_flex --wincompat') | Out-File src\gcconfig.pri  
         (Get-Content src\gcconfig.pri ).Replace('#QMAKE_YACC = win_bison','QMAKE_YACC = win_bison --file-prefix=y -t') | Out-File src\gcconfig.pri  
         (Get-Content src\gcconfig.pri ).Replace('#HTPATH = ../httpserver','HTPATH = ../httpserver') | Out-File src\gcconfig.pri                  
-        (Get-Content src\gcconfig.pri ).Replace('#DEFINES += GC_WANT_ROBOT','DEFINES += GC_WANT_ROBOT') | Out-File src\gcconfig.pri 
+        (Get-Content src\gcconfig.pri ).Replace('#DEFINES += GC_WANT_ROBOT','DEFINES += GC_WANT_ROBOT') | Out-File src\gcconfig.pri
+        (Get-Content src\gcconfig.pri ).Replace('# VLC_INSTALL = /usr/local/vlc','VLC_INSTALL = C:\Coding\gc-win-sdk-64bit') | Out-File src\gcconfig.pri 
+        (Get-Content src\gcconfig.pri ).Replace('#VLC_INCLUDE =','VLC_INCLUDE = $${VLC_INSTALL}\common\VLC\win64\include') | Out-File src\gcconfig.pri 
+        (Get-Content src\gcconfig.pri ).Replace('#VLC_LIBS    =','VLC_LIBS    = -L$${VLC_INSTALL}\common\VLC\win64\lib -llibvlc -llibvlccore') | Out-File src\gcconfig.pri
+        (Get-Content src\gcconfig.pri ).Replace('#DEFINES += GC_VIDEO_VLC','DEFINES += GC_VIDEO_VLC') | Out-File src\gcconfig.pri    
         "DEFINES += NOWEBKIT" | Add-Content src\gcconfig.pri.
         "CONFIG += lex" | Add-Content src\gcconfig.pri. 
         "CONFIG += yacc" | Add-Content src\gcconfig.pri. 
