@@ -39,7 +39,7 @@ jobs:
 
     - name: Run vcpkg
       run: C:\Coding\vcpkg-2020.11-1\vcpkg install gsl --triplet x64-windows
-	  
+
     - name: Prep qwt
       run: Copy-Item "qwt\qwtconfig.pri.in" -Destination "qwt\qwtconfig.pri"
       
