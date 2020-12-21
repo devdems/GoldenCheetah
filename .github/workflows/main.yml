@@ -98,7 +98,7 @@ jobs:
       run: jom qmake_all
     
     - name: Run jom
-      run: jom
+      run: jom -j1
       
     - name: Rename build
       run: Copy-Item "release\GoldenCheetah.exe" -Destination "release\GoldenCheetah-${{ steps.create_timestamp.outputs.release_datestamp }}.exe"
