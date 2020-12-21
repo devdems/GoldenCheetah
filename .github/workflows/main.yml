@@ -27,7 +27,6 @@ jobs:
       	  
     - name: Extract sdk
       run: Expand-Archive -Path gc-win-sdk-64bit.zip -DestinationPath C:\Coding     
-      shell: powershell
            
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
