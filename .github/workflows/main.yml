@@ -46,10 +46,6 @@ jobs:
     - name: Run vcpkg
       run: C:\Coding\vcpkg-2020.11-1\vcpkg install gsl --triplet x64-windows
     
-    - name: check dir2
-      run: dir "C:\Coding\vcpkg-2020.11-1\"
-      shell: cmd
-
     - name: Prep qwt
       run: Copy-Item "qwt\qwtconfig.pri.in" -Destination "qwt\qwtconfig.pri"
       
@@ -86,21 +82,14 @@ jobs:
       with:
           modules: 'qtcharts qtwebengine qtwebenginecore qtwebenginewidgets'
 
-    - name: Create Makefile
+    - name: Build
       run: |
         Invoke-Expression "& 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat' amd64"
         qmake -o Makefile build.pro
-      
-    - name: Run MakeFile
-      run: qmake build.pro
-      
-    - name: Run qmake_all
-      run: jom qmake_all
-    
-    - name: Run jom
-      run: jom -j1
-      
-    - name: Rename build
+        qmake build.pro
+        jom qmake_all && jom -j1
+            
+    - name: Rename file
       run: Copy-Item "src\release\GoldenCheetah.exe" -Destination "src\release\GoldenCheetah-${{ steps.create_timestamp.outputs.release_datestamp }}.exe"
       
     - name: Upload binaries to release
