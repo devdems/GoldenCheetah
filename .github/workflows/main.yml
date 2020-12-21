@@ -22,6 +22,9 @@ jobs:
         ren "C:\ProgramData\chocolatey\bin\win_bison.exe" "bison.exe"
         ren "C:\ProgramData\chocolatey\bin\win_flex.exe" "flex.exe" 
         
+    - name: jom
+      run: choco install jom
+        
     - name: Get SDK
       run: Invoke-webrequest -uri https://github.com/GoldenCheetah/WindowsSDK/releases/download/v0.1.1/gc-win-sdk-64bit.zip -OutFile gc-win-sdk-64bit.zip	      
       
