@@ -20,7 +20,7 @@ jobs:
        
     - name: Create Timestamp
       id: create_timestamp
-      run: $buildTime = Get-Date -Format "yyyyMMddHHmmss""; Write-Host "::set-output name=release_datestamp::$buildTime"
+      run: $buildTime = Get-Date -Format "yyyyMMddHHmmss"; Write-Host "::set-output name=release_datestamp::$buildTime"
           
     - name: Install flex/bison
       run:  choco install winflexbison
