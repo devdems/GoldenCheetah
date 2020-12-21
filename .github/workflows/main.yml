@@ -36,28 +36,28 @@ jobs:
           setup-python: 'false'
           
     - name: Prep qwt
-      run: Copy-Item "D:\a\GoldenCheetah\qwt\qwtconfig.pri.in" -Destination "D:\a\GoldenCheetah\src\qwtconfig.pri"
+      run: Copy-Item "qwt\qwtconfig.pri.in" -Destination "qwt\qwtconfig.pri"
       
     - name: Prep gcc
       run: |
-        Copy-Item "D:\a\GoldenCheetah\src\gccconfig.pri.in" -Destination "D:\a\GoldenCheetah\src\gccconfig.pri"
-        ((Get-Content -path D:\a\GoldenCheetah\src\gccconfig.pri -Raw) -replace '#CONFIG += release','CONFIG += release') | Set-Content -Path D:\a\GoldenCheetah\src\gccconfig.pri
-        ((Get-Content -path D:\a\GoldenCheetah\src\gccconfig.pri -Raw) -replace '#QMAKE_LRELEASE = /usr/bin/lrelease','QMAKE_LRELEASE = lrelease') | Set-Content -Path D:\a\GoldenCheetah\src\gccconfig.pri
-        ((Get-Content -path D:\a\GoldenCheetah\src\gccconfig.pri -Raw) -replace '#WINKIT_INSTALL= "C:/Program Files (x86)/Windows Kits/8.1/Lib/winv6.3/um/x64"','WINKIT_INSTALL = "c:\Program Files (x86)\Windows Kits\10\Lib\10.0.18362.0\um\x64"') | Set-Content -Path D:\a\GoldenCheetah\src\gccconfig.pri
-        ((Get-Content -path D:\a\GoldenCheetah\src\gccconfig.pri -Raw) -replace '#QMAKE_LEX = win_flex','QMAKE_LEX = win_flex --wincompat') | Set-Content -Path D:\a\GoldenCheetah\src\gccconfig.pri
-        ((Get-Content -path D:\a\GoldenCheetah\src\gccconfig.pri -Raw) -replace '#QMAKE_YACC = win_bison','QMAKE_YACC = win_bison --file-prefix=y -t') | Set-Content -Path D:\a\GoldenCheetah\src\gccconfig.pri
-        ((Get-Content -path D:\a\GoldenCheetah\src\gccconfig.pri -Raw) -replace '#HTPATH = ../httpserver','HTPATH = ../httpserver') | Set-Content -Path D:\a\GoldenCheetah\src\gccconfig.pri
-        ((Get-Content -path D:\a\GoldenCheetah\src\gccconfig.pri -Raw) -replace '#DEFINES += GC_WANT_ROBOT','DEFINES += GC_WANT_ROBOT') | Set-Content -Path D:\a\GoldenCheetah\src\gccconfig.pri
-        "DEFINES += NOWEBKIT" | Add-Content D:\a\GoldenCheetah\src\gccconfig.pri.
-        "CONFIG += lex" | Add-Content D:\a\GoldenCheetah\src\gccconfig.pri. 
-        "CONFIG += yacc" | Add-Content D:\a\GoldenCheetah\src\gccconfig.pri. 
-        "lex.CONFIG += target_predeps" | Add-Content D:\a\GoldenCheetah\src\gccconfig.pri.
-        "yacc_impl.CONFIG += target_predeps" | Add-Content D:\a\GoldenCheetah\src\gccconfig.pri. 
-        "yacc_decl.CONFIG += target_predeps" | Add-Content D:\a\GoldenCheetah\src\gccconfig.pri. 
-        "GC_COMPONENTS=C:\Coding\gc-win-sdk-64bit" | Add-Content D:\a\GoldenCheetah\src\gccconfig.pri. 
+        Copy-Item "src\gccconfig.pri.in" -Destination "src\gccconfig.pri"
+        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#CONFIG += release','CONFIG += release') | Set-Content -Path src\gccconfig.pri
+        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#QMAKE_LRELEASE = /usr/bin/lrelease','QMAKE_LRELEASE = lrelease') | Set-Content -Path src\gccconfig.pri
+        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#WINKIT_INSTALL= "C:/Program Files (x86)/Windows Kits/8.1/Lib/winv6.3/um/x64"','WINKIT_INSTALL = "c:\Program Files (x86)\Windows Kits\10\Lib\10.0.18362.0\um\x64"') | Set-Content -Path src\gccconfig.pri
+        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#QMAKE_LEX = win_flex','QMAKE_LEX = win_flex --wincompat') | Set-Content -Path src\gccconfig.pri
+        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#QMAKE_YACC = win_bison','QMAKE_YACC = win_bison --file-prefix=y -t') | Set-Content -Path src\gccconfig.pri
+        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#HTPATH = ../httpserver','HTPATH = ../httpserver') | Set-Content -Path src\gccconfig.pri
+        ((Get-Content -path src\gccconfig.pri -Raw) -replace '#DEFINES += GC_WANT_ROBOT','DEFINES += GC_WANT_ROBOT') | Set-Content -Path src\gccconfig.pri
+        "DEFINES += NOWEBKIT" | Add-Content src\gccconfig.pri.
+        "CONFIG += lex" | Add-Content src\gccconfig.pri. 
+        "CONFIG += yacc" | Add-Content src\gccconfig.pri. 
+        "lex.CONFIG += target_predeps" | Add-Content src\gccconfig.pri.
+        "yacc_impl.CONFIG += target_predeps" | Add-Content src\gccconfig.pri. 
+        "yacc_decl.CONFIG += target_predeps" | Add-Content src\gccconfig.pri. 
+        "GC_COMPONENTS=C:\Coding\gc-win-sdk-64bit" | Add-Content src\gccconfig.pri. 
         
     - name: show gcc
-      run: Get-Content -path D:\a\GoldenCheetah\src\gccconfig.pri   
+      run: Get-Content -path src\gccconfig.pri   
       
     - name: Create Makefile
       run: |
