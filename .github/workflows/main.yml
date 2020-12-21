@@ -34,7 +34,7 @@ jobs:
       
     - name: Create Makefile
       run: |
-        Invoke-Expression "& 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat' x64"
+        Invoke-Expression "& 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat'"
         qmake -o Makefile build.pro -spec winrt-x64-msvc2017  
       
     - name: Run MakeFile
