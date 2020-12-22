@@ -80,7 +80,8 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-          modules: 'qtcharts qtwebengine qtwebenginecore qtwebenginewidgets'
+        version: '5.14.2'
+        modules: 'qtcharts qtwebengine qtwebenginecore qtwebenginewidgets'
 
     - name: Build
       run: |
@@ -97,6 +98,6 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: src\release\GoldenCheetah-${{ steps.create_timestamp.outputs.release_datestamp }}.exe
-        tag: ${{ github.ref }}-nightly
+        tag: ${{ github.ref }}-nightly-${{ steps.create_timestamp.outputs.release_datestamp }}
         prerelease: true
         release_name: "Nightly Development Build - ${{ steps.create_timestamp.outputs.release_datestamp }}" 
