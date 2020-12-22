@@ -86,10 +86,12 @@ jobs:
     - name: Build
       run: |
         Invoke-Expression "& 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat' amd64"
-        qmake -o Makefile build.pro
-        qmake build.pro
-        jom qmake_all && jom -j1
-            
+        qmake build.pro -r -spec win32-msvc
+        cd qwt
+        jom -j1
+        cd..
+        jom -j2
+                  
     - name: Rename file
       run: Copy-Item "src\release\GoldenCheetah.exe" -Destination "src\release\GoldenCheetah-${{ steps.create_timestamp.outputs.release_datestamp }}.exe"
       
