@@ -19,10 +19,6 @@ environment:
     secure: pvPWraDplrKeRNamt5MKga8fzDmI2+zgFx+y3lsQE6gmBadZU2xkTIc/xCaP7UPv2erNCmKivfMOh2NIcRmqvIHynDoifNVy2P61KyG5v3E=
   GC_DROPBOX_CLIENT_SECRET:
     secure: 7pCVnVEKKmSU4SZN6IFqUw==
-  GC_STRAVA_CLIENT_ID:
-    secure: 58744
-  GC_STRAVA_CLIENT_SECRET:
-    secure: f914bf4f1d5853e4ddbf5140572ac052ec71c60b
   GC_TODAYSPLAN_CLIENT_SECRET:
     secure: 7PnFB8cfahFT6LyP64eB7N1vkbwVaULpB2ORmEkn+J75zNB1xxGClFNXSHZ7kXhB
   GC_CYCLINGANALYTICS_CLIENT_SECRET:
@@ -141,8 +137,6 @@ before_build:
 - ps: (Get-Content src\Core\Secrets.h) -replace '__GC_WITHINGS_CONSUMER_SECRET__', $env:GC_WITHINGS_CONSUMER_SECRET | Set-Content src\Core\Secrets.h
 - ps: (Get-Content src\Core\Secrets.h) -replace '__GC_NOKIA_CLIENT_SECRET__', $env:GC_NOKIA_CLIENT_SECRET | Set-Content src\Core\Secrets.h
 - ps: (Get-Content src\Core\Secrets.h) -replace '__GC_DROPBOX_CLIENT_SECRET__', $env:GC_DROPBOX_CLIENT_SECRET | Set-Content src\Core\Secrets.h
-- ps: (Get-Content src\Core\Secrets.h) -replace '__GC_STRAVA_CLIENT_ID__', $env:GC_STRAVA_CLIENT_ID | Set-Content src\Core\Secrets.h
-- ps: (Get-Content src\Core\Secrets.h) -replace '__GC_STRAVA_CLIENT_SECRET__', $env:GC_STRAVA_CLIENT_SECRET | Set-Content src\Core\Secrets.h
 - ps: (Get-Content src\Core\Secrets.h) -replace '__GC_TODAYSPLAN_CLIENT_SECRET__', $env:GC_TODAYSPLAN_CLIENT_SECRET | Set-Content src\Core\Secrets.h
 - ps: (Get-Content src\Core\Secrets.h) -replace '__GC_CYCLINGANALYTICS_CLIENT_SECRET__', $env:GC_CYCLINGANALYTICS_CLIENT_SECRET | Set-Content src\Core\Secrets.h
 - ps: (Get-Content src\Core\Secrets.h) -replace '__GC_CLOUD_DB_BASIC_AUTH__', $env:GC_CLOUD_DB_BASIC_AUTH | Set-Content src\Core\Secrets.h
